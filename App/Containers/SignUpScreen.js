@@ -3,6 +3,7 @@ import {View,Text, Image, Dimensions, TouchableOpacity, TextInput, Button, Scrol
 import InputComponent from './../Components/InputComponent'
 import firebase from 'react-native-firebase';
 import { Item, Label,Input,Icon, Form, ListItem, CheckBox, Body, Textarea } from 'native-base';
+import LoginScreen from './LoginScreen'
 const {height, width} = Dimensions.get('window')
 const db = firebase.firestore()
 export default class MainScreen extends Component{
@@ -19,7 +20,8 @@ export default class MainScreen extends Component{
             user:null,
             codeInput: '',
             description: '',
-            isMechanic: false
+            isMechanic: false,
+            toggle: false
 
         }
         this.SignUpForm = this._SignUpForm.bind(this);
@@ -87,83 +89,94 @@ export default class MainScreen extends Component{
     _SignUpForm(){
         const {message, numberError} = this.state
         return(
-            <View style={{borderRadius: 20, width:width * 0.8, height:height*0.8, backgroundColor:'#aaaeb5', opacity: 0.9, marginTop: height*0.08, marginLeft: width*0.1}}>
-                <View style={{width: width*0.8, height: height*0.71, paddingRight:20}}>
-                    <Form>
-                        <ScrollView>
-                            <InputComponent
-                                labelText = 'FirstName'
-                                placeholder = 'Enter First Name'
-                                secureTextEntry = {false}
-                                value = {this.state.firstName}
-                                onChangeText={(text)=>this.setState({firstName:text})}
-                            />
-                            <InputComponent
-                                labelText = 'LastName'
-                                placeholder = 'Enter Last Name'
-                                secureTextEntry = {false}
-                                value = {this.state.lastName}
-                                onChangeText={(text)=>this.setState({lastName:text})}
-                            />
-                            <InputComponent
-                                labelText = 'Phone no'
-                                placeholder = '+92'
-                                secureTextEntry = {false}
-                                value = {this.state.phoneNo}
-                                onChangeText={(text)=>this.setState({phoneNo:text})}
-                                keyboardType = 'numeric'
-                            />
-                            <InputComponent
-                                labelText = 'Email'
-                                placeholder = 'abc@gmail.com'
-                                secureTextEntry = {false}
-                                value = {this.state.email}
-                                onChangeText={(text)=>this.setState({email:text})}
-                                keyboardType="email-address"
-                            />
-                            <InputComponent
-                                labelText = 'Password'
-                                placeholder = 'Enter Password'
-                                secureTextEntry = {true}
-                                value = {this.state.password}
-                                onChangeText={(text)=>this.setState({password:text})}
-                            />
-                            <View style={{flexDirection:'row', width: width, height: height* 0.1}}>
-                                <View style={{width: width* 0.4}}>
-                                    <ListItem>
-                                        <CheckBox
-                                            onPress = {()=> this.setState({isMechanic: !this.state.isMechanic})}
-                                            checked={!this.state.isMechanic}
-                                        />
-                                        <Body>
-                                        <Text>User</Text>
-                                        </Body>
-                                    </ListItem>
+            <View>
+                <View style={{borderRadius: 20, width:width * 0.8, height:height*0.8, backgroundColor:'#aaaeb5', opacity: 0.9, marginTop: height*0.08, marginLeft: width*0.1}}>
+                    <View style={{width: width*0.8, height: height*0.71, paddingRight:20}}>
+                        <Form>
+                            <ScrollView>
+                                <InputComponent
+                                    labelText = 'FirstName'
+                                    placeholder = 'Enter First Name'
+                                    secureTextEntry = {false}
+                                    value = {this.state.firstName}
+                                    onChangeText={(text)=>this.setState({firstName:text})}
+                                />
+                                <InputComponent
+                                    labelText = 'LastName'
+                                    placeholder = 'Enter Last Name'
+                                    secureTextEntry = {false}
+                                    value = {this.state.lastName}
+                                    onChangeText={(text)=>this.setState({lastName:text})}
+                                />
+                                <InputComponent
+                                    labelText = 'Phone no'
+                                    placeholder = '+92'
+                                    secureTextEntry = {false}
+                                    value = {this.state.phoneNo}
+                                    onChangeText={(text)=>this.setState({phoneNo:text})}
+                                    keyboardType = 'numeric'
+                                />
+                                <InputComponent
+                                    labelText = 'Email'
+                                    placeholder = 'abc@gmail.com'
+                                    secureTextEntry = {false}
+                                    value = {this.state.email}
+                                    onChangeText={(text)=>this.setState({email:text})}
+                                    keyboardType="email-address"
+                                />
+                                <InputComponent
+                                    labelText = 'Password'
+                                    placeholder = 'Enter Password'
+                                    secureTextEntry = {true}
+                                    value = {this.state.password}
+                                    onChangeText={(text)=>this.setState({password:text})}
+                                />
+                                <View style={{flexDirection:'row', width: width, height: height* 0.1}}>
+                                    <View style={{width: width* 0.4}}>
+                                        <ListItem>
+                                            <CheckBox
+                                                onPress = {()=> this.setState({isMechanic: !this.state.isMechanic})}
+                                                checked={!this.state.isMechanic}
+                                            />
+                                            <Body>
+                                            <Text>User</Text>
+                                            </Body>
+                                        </ListItem>
+                                    </View>
+                                    <View style={{width: width* 0.4}}>
+                                        <ListItem>
+                                            <CheckBox
+                                                onPress = {()=> this.setState({isMechanic: !this.state.isMechanic})}
+                                                checked={this.state.isMechanic}
+                                            />
+                                            <Body>
+                                            <Text>Mechanic</Text>
+                                            </Body>
+                                        </ListItem>
+                                    </View>
                                 </View>
-                                <View style={{width: width* 0.4}}>
-                                    <ListItem>
-                                        <CheckBox
-                                            onPress = {()=> this.setState({isMechanic: !this.state.isMechanic})}
-                                            checked={this.state.isMechanic}
-                                        />
-                                        <Body>
-                                        <Text>Mechanic</Text>
-                                        </Body>
-                                    </ListItem>
-                                </View>
-                            </View>
                             <Textarea
                                 rowSpan={3} placeholder="Description"
                                 onChangeText={(text)=> this.setState({description: text})}
                             />
-                        </ScrollView>
-                    </Form>
+                            </ScrollView>
+                        </Form>
+                    </View>
+                    <TouchableOpacity onPress={this.signIn}>
+                        <View style={{width:width*0.8, height: height*0.09, backgroundColor:'#5c8ddb',alignItems: 'center',justifyContent:'center', borderBottomLeftRadius:20, borderBottomRightRadius: 20}}>
+                            <Text style={{fontSize:20, color:'#636568'}}>SignUp</Text>
+                        </View>
+                    </TouchableOpacity>
                 </View>
-                <TouchableOpacity onPress={this.signIn}>
-                <View style={{width:width*0.8, height: height*0.09, backgroundColor:'#5c8ddb',alignItems: 'center',justifyContent:'center', borderBottomLeftRadius:20, borderBottomRightRadius: 20}}>
-                    <Text style={{fontSize:20, color:'#636568'}}>SignUp</Text>
+
+                <View style={{width: width*0.4, height: height*0.07, flexDirection:'row', alignItems:'center', justifyContent:'center', marginLeft: width* 0.6}}>
+                    <TouchableOpacity style={{flexDirection:'row'}} onPress= {()=> this.setState({toggle:true})}>
+                        <Text style={{fontSize:17}}>Login Here</Text>
+                        <View style={{width: width *0.1, height:height* 0.04}}>
+                            <Image source={require('./../../assets/rightArrow.png')} style={{width: width *0.1, height:height* 0.04}}/>
+                        </View>
+                    </TouchableOpacity>
                 </View>
-                </TouchableOpacity>
             </View>
         )
     }
@@ -172,9 +185,15 @@ export default class MainScreen extends Component{
         const {user,confirmResult} = this.state;
         return(
             <View style={{width: width, height: height,}}>
-                <Image source={require('./../../assets/backgroundImage.jpg')} style={{width: width, height: height, position: 'absolute'}}/>
-                {!user && !confirmResult && this.SignUpForm()}
-                {!user && confirmResult && this.renderVerificationCodeInput()}
+                {this.state.toggle ? <LoginScreen/> :
+                    <View>
+                        <Image source={require('./../../assets/backgroundImage.jpg')} style={{width: width, height: height, position: 'absolute'}}/>
+                        {!user && !confirmResult && this.SignUpForm()}
+                        {!user && confirmResult && this.renderVerificationCodeInput()}
+                    </View>
+                }
+
+
             </View>
         )
     }
