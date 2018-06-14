@@ -8,13 +8,14 @@ import {
 import {StackNavigator} from 'react-navigation'
 import LoginScreen from './App/Containers/LoginScreen';
 import MechanicLogin from './App/Containers/MechanicLoginScreen';
-import MainScreen from './App/Containers/SignUpScreen'
+import MainScreen from './App/Containers/SignUpScreen';
+import MapScreen from './App/Containers/MapScreen'
 export default class App extends Component{
 
     render() {
         return (
             <View>
-                <LoginScreen/>
+                <MapScreen/>
 
             </View>
 

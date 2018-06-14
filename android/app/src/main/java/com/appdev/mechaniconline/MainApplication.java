@@ -22,7 +22,7 @@ import io.invertase.firebase.messaging.RNFirebaseMessagingPackage; // Firebase C
 import io.invertase.firebase.perf.RNFirebasePerformancePackage; // Firebase Performance
 import io.invertase.firebase.storage.RNFirebaseStoragePackage; // Firebase Storage
 import io.invertase.firebase.fabric.crashlytics.RNFirebaseCrashlyticsPackage; // Crashlytics
-
+import com.airbnb.android.react.maps.MapsPackage;
 import java.util.Arrays;
 import java.util.List;
 
@@ -38,6 +38,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
         new MainReactPackage(),
+        new MapsPackage(),
             new RNFirebasePackage(),
         // add/remove these packages as appropriate
         new RNFirebaseAdMobPackage(),

@@ -5,6 +5,7 @@ import firebase from 'react-native-firebase';
 import { Item, Label,Input,Icon, Form } from 'native-base';
 import PhoneInput from 'react-native-phone-input';
 import MainScreen from './SignUpScreen';
+import MapScreen from './MapScreen';
 const {height, width} = Dimensions.get('window')
 const db = firebase.firestore()
 export default class LoginScreen extends Component{
@@ -21,7 +22,8 @@ export default class LoginScreen extends Component{
             user:null,
             codeInput: '',
             dataExist: false,
-            toggle: false
+            toggle: false,
+            codeConfirmed: false
 
         }
     }
@@ -62,7 +64,7 @@ export default class LoginScreen extends Component{
                  }
              }
              else{
-                 alert("please First SignUp")
+                 alert("please create an account")
              }
 
          },5000)
@@ -73,7 +75,8 @@ export default class LoginScreen extends Component{
         if (confirmResult && codeInput.length) {
             confirmResult.confirm(codeInput)
                 .then((user) => {
-                    this.setState({ message: 'Code Confirmed!' });
+                    this.setState({ message: 'Code Confirmed!', codeConfirmed: true });
+
                 })
                 .catch(error => this.setState({ message: `Code Confirm Error: ${error.message}` }));
         }
@@ -142,7 +145,7 @@ export default class LoginScreen extends Component{
         const {user,confirmResult} = this.state;
         return(
             <View style={{width: width, height: height,}}>
-                {this.state.toggle ? <MainScreen/> :
+                {this.state.codeConfirmed ? <MapScreen/>: this.state.toggle ? <MainScreen/> :
                     <View>
                         <Image source={require('./../../assets/backgroundImage.jpg')} style={{width: width, height: height, position: 'absolute'}}/>
                         {!user && !confirmResult && this.login()}
