@@ -6,7 +6,10 @@ import { Item, Label,Input,Icon, Form, ListItem, CheckBox, Body, Textarea } from
 import LoginScreen from './LoginScreen'
 const {height, width} = Dimensions.get('window')
 const db = firebase.firestore()
-export default class MainScreen extends Component{
+export default class SignUpScreen extends Component{
+    static navigationOptions = {
+        header : null
+    };
     constructor(props){
         super(props);
         this.state ={

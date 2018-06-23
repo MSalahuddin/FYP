@@ -20,22 +20,53 @@ const styles = StyleSheet.create({
 });
 
 export default class MapScreen extends Component{
+    static navigationOptions = {
+        header : null
+    };
+    constructor(props){
+        super(props);
+        this.state = {
+            longitude: null,
+            latitude: null,
+            getPosition: false
+        }
+
+    }
+    componentDidMount() {
+        this.watchId = navigator.geolocation.watchPosition(
+            (position) => {
+               this.setState({
+                   longitude: position.coords.longitude,
+                   latitude: position.coords.latitude,
+                   getPosition: true
+               })
+            },
+            (error) => this.setState({ error: error.message }),
+            { enableHighAccuracy: true, timeout: 10000, maximumAge: 1000, distanceFilter: 10 },
+        );
+    }
     render(){
         const { region } = this.props;
         console.log(region);
         return(
             <View style={{width: width, height: height, backgroundColor:'red'}}>
                 <View style ={styles.container}>
-                    <MapView
-                        style={styles.map}
-                        region={{
-                            latitude: 37.78825,
-                            longitude: -122.4324,
-                            latitudeDelta: 0.015,
-                            longitudeDelta: 0.0121,
-                        }}
-                    >
-                    </MapView>
+                    {this.state.getPosition ?
+                        <MapView
+                            style={styles.map}
+                            region={{
+                                latitude: this.state.latitude,
+                                longitude: this.state.longitude,
+                                latitudeDelta: 0.015,
+                                longitudeDelta: 0.0121,
+                            }}
+                        >
+                        </MapView> :
+                        <View style={{backgroundColor:'blue'}}>
+
+                        </View>
+                    }
+
                 </View>
             </View>
         )

@@ -4,11 +4,14 @@ import InputComponent from './../Components/InputComponent'
 import firebase from 'react-native-firebase';
 import { Item, Label,Input,Icon, Form } from 'native-base';
 import PhoneInput from 'react-native-phone-input';
-import MainScreen from './SignUpScreen';
+import SignUpScreen from './SignUpScreen';
 import MapScreen from './MapScreen';
 const {height, width} = Dimensions.get('window')
 const db = firebase.firestore()
 export default class LoginScreen extends Component{
+    static navigationOptions = {
+        header : null
+    };
     constructor(props){
         super(props);
         this.state ={
